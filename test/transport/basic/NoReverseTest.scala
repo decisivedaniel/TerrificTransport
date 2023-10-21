@@ -1,6 +1,6 @@
-package snake.basic
+package transport.basic
 
-import snake.{ReverseGame, SnakeTestSuiteBase}
+import transport.{ReverseGame, SnakeTestSuiteBase}
 
 class NoReverseTest extends SnakeTestSuiteBase {
 

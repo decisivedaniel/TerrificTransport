@@ -1,7 +1,7 @@
-package snake.basic
+package transport.basic
 
-import snake.logic.{North, South, West}
-import snake.{ChangeDir, SnakeTestSuiteBase}
+import transport.logic.{North, South, West}
+import transport.{ChangeDir, SnakeTestSuiteBase}
 
 class DeathTests extends SnakeTestSuiteBase {
 

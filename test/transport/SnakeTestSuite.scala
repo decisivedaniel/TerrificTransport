@@ -1,12 +1,12 @@
-package snake
+package transport
 
 import infrastructure.ScoreCounter
 import org.junit.runner.RunWith
 import org.scalatest.{Args, Status, Suites}
 import org.scalatestplus.junit.JUnitRunner
-import snake.BaseSnakeTestSuite.{BaseTests, MaxGrade}
-import snake.basic.{DeathTests, GrowthTests, MovementTests, FullGameTests, NoReverseTest, PlacementTests, WrapAroundTests}
-import snake.reverse.ReverseTests
+import transport.BaseSnakeTestSuite.{BaseTests, MaxGrade}
+import transport.basic.{DeathTests, GrowthTests, MovementTests, FullGameTests, NoReverseTest, PlacementTests, WrapAroundTests}
+import transport.reverse.ReverseTests
 
 abstract class SnakeTestSuite(suites: SnakeTestSuiteBase*) extends Suites(BaseTests ++ suites: _*) {
     override def run(testName: Option[String], args: Args): Status = {

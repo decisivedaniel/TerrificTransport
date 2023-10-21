@@ -1,7 +1,7 @@
-package snake.basic
+package transport.basic
 
-import snake.logic.{East, North, South, West}
-import snake.{ChangeDir, SnakeTestSuiteBase}
+import transport.logic.{East, North, South, West}
+import transport.{ChangeDir, SnakeTestSuiteBase}
 
 class FullGameTests extends SnakeTestSuiteBase {
     test("testGame3x1") {

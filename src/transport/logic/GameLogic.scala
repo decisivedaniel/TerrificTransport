@@ -1,7 +1,7 @@
-package snake.logic
+package transport.logic
 
 import engine.random.{RandomGenerator, ScalaRandomGen}
-import snake.logic.GameLogic._
+import transport.logic.GameLogic._
 
 /** To implement Snake, complete the ``TODOs`` below.
  *

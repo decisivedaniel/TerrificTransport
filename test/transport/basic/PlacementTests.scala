@@ -1,6 +1,6 @@
-package snake.basic
+package transport.basic
 
-import snake.SnakeTestSuiteBase
+import transport.SnakeTestSuiteBase
 
 class PlacementTests extends SnakeTestSuiteBase {
 

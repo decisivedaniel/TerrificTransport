@@ -6,7 +6,7 @@ import java.io.{OutputStream, PrintStream}
 
 import org.scalatest.{Args, ConfigMap, Reporter}
 import org.scalatest.events.{Event, TestFailed, TestSucceeded}
-import snake.{SnakeTestSuite, SnakeTestsAssignment2_1, SnakeTestsAssignment2_3}
+import transport.{SnakeTestSuite, SnakeTestsAssignment2_1, SnakeTestsAssignment2_3}
 
 class CustomReporter(val out : PrintStream) extends Reporter {
     override def apply(event: Event): Unit = {

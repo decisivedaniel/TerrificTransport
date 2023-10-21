@@ -1,11 +1,11 @@
 // DO NOT MODIFY FOR BASIC SUBMISSION
 // scalastyle:off
 
-package snake
+package transport
 
 import engine.random.RandomGenerator
 import generic.{CellTypeInterface, GameLogicInterface, GameTestSuite}
-import snake.logic.{Apple, CellType, Dimensions, Direction, East, Empty, GameLogic, North, Point, SnakeBody, SnakeHead, South, West}
+import transport.logic.{Apple, CellType, Dimensions, Direction, East, Empty, GameLogic, North, Point, SnakeBody, SnakeHead, South, West}
 
 
 sealed abstract class SnakeAction

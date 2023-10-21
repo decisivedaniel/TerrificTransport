@@ -1,7 +1,7 @@
-package snake.reverse
+package transport.reverse
 
-import snake.logic.{East, North, South, West}
-import snake.{ChangeDir, ReverseGame, SnakeTestSuiteBase}
+import transport.logic.{East, North, South, West}
+import transport.{ChangeDir, ReverseGame, SnakeTestSuiteBase}
 
 class ReverseTests extends SnakeTestSuiteBase {
 

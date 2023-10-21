@@ -1,7 +1,7 @@
 // DO NOT MODIFY FOR BASIC SUBMISSION
 // scalastyle:off
 
-package snake.game
+package transport.game
 
 import java.awt.event
 import processing.core.{PApplet, PConstants}
@@ -10,12 +10,12 @@ import processing.event.KeyEvent
 import java.awt.event.KeyEvent._
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
-import snake.logic.{Apple, CellType, Dimensions, Direction, East, Empty, GameLogic, North, SnakeBody, SnakeHead, South, West, Point => GridPoint}
-import snake.game.SnakeGame._
+import transport.logic.{Apple, CellType, Dimensions, Direction, East, Empty, GameLogic, North, SnakeBody, SnakeHead, South, West, Point => GridPoint}
+import transport.game.TransportGame._
 import engine.graphics.Color._
 import engine.random.ScalaRandomGen
 
-class SnakeGame extends GameBase {
+class TransportGame extends GameBase {
 
   var gameLogic = new GameLogic(new ScalaRandomGen(),GameLogic.DefaultGridDims)
   val updateTimer = new UpdateTimer(GameLogic.FramesPerSecond.toFloat)
@@ -137,7 +137,7 @@ class SnakeGame extends GameBase {
 }
 
 
-object SnakeGame {
+object TransportGame {
 
 
   val WidthCellInPixels: Double = 20 * GameLogic.DrawSizeFactor
@@ -146,7 +146,7 @@ object SnakeGame {
   def main(args: Array[String]): Unit = {
     // This is needed for Processing, using the name
     // of the class in a string is not very beautiful...
-    PApplet.main("snake.game.SnakeGame")
+    PApplet.main("transport.game.TransportGame")
   }
 
 }
