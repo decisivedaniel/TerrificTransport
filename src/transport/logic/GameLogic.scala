@@ -18,7 +18,7 @@ class GameLogic(val random: RandomGenerator,
 
   // TODO implement me
   def moveCursor(d: Direction): Unit = {
-    currentFrame = currentFrame.moveCursor(d)
+    currentFrame = currentFrame.moveCursor(d, gridDims)
   }
 
   // TODO implement me
