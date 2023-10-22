@@ -10,7 +10,7 @@ import processing.event.KeyEvent
 import java.awt.event.KeyEvent._
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
-import transport.logic.{Apple, CellType, Dimensions, Direction, East, Empty, GameLogic, North, SnakeBody, SnakeHead, South, West, Point => GridPoint}
+import transport.logic.{Cursor, CellType, Dimensions, Direction, East, Empty, GameLogic, North, South, West, Point => GridPoint}
 import transport.game.TransportGame._
 import engine.graphics.Color._
 import engine.random.ScalaRandomGen
@@ -58,17 +58,24 @@ class TransportGame extends GameBase {
 
     def drawCell(area: Rectangle, cell: CellType): Unit = {
       cell match {
-        case SnakeHead(direction) =>
-          setFillColor(Color.LawnGreen)
-          drawTriangle(getTriangleForDirection(direction, area))
-        case SnakeBody(p) =>
-          val color = Color.LawnGreen.interpolate(p,Color.DarkGreen)
-          setFillColor(color)
+        case Cursor() =>
+          stroke(255,255,255,255)
+          setFillColor(Color(255,255,0,128))
           drawRectangle(area)
-        case Apple()  =>
-          setFillColor(Color.Red)
-          drawEllipse(area)
-        case Empty() => ()
+//        case SnakeHead(direction) =>
+//          setFillColor(Color.LawnGreen)
+//          drawTriangle(getTriangleForDirection(direction, area))
+//        case SnakeBody(p) =>
+//          val color = Color.LawnGreen.interpolate(p,Color.DarkGreen)
+//          setFillColor(color)
+//          drawRectangle(area)
+//        case Apple()  =>
+//          setFillColor(Color.Red)
+//          drawEllipse(area)
+        case Empty() =>
+          setFillColor(Color.DarkGreen)
+          drawRectangle(area)
+
       }
     }
 
@@ -89,14 +96,14 @@ class TransportGame extends GameBase {
    */
   override def keyPressed(event: KeyEvent): Unit = {
 
-    def changeDir(dir: Direction): Unit =
-      gameLogic.changeDir(dir)
+    def moveCursor(dir: Direction): Unit =
+      gameLogic.moveCursor(dir)
 
     event.getKeyCode match {
-      case VK_UP    => changeDir(North())
-      case VK_DOWN  => changeDir(South())
-      case VK_LEFT  => changeDir(West())
-      case VK_RIGHT => changeDir(East())
+      case VK_UP    => moveCursor(North())
+      case VK_DOWN  => moveCursor(South())
+      case VK_LEFT  => moveCursor(West())
+      case VK_RIGHT => moveCursor(East())
       case VK_R     => gameLogic.setReverse(true)
       case _        => ()
     }

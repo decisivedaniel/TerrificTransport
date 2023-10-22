@@ -47,7 +47,7 @@ case class SnakeLogicWrapper(logic: GameLogic)
   extends GameLogicInterface[SnakeAction, SnakeGridTypeWrapper] {
 
   override def performAction(action: SnakeAction): Unit = action match {
-    case ChangeDir(d) => logic.changeDir(d)
+    case ChangeDir(d) => logic.moveCursor(d)
     case Step => logic.step()
     case ReverseGame(enable) => logic.setReverse(enable)
   }

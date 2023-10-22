@@ -10,17 +10,19 @@ import transport.logic.GameLogic._
  */
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
-
+  private var currentFrame : TrainFrame = TrainFrame(Point(0,0))
   def gameOver: Boolean = false
 
   // TODO implement me
   def step(): Unit = ()
 
   // TODO implement me
-  def changeDir(d: Direction): Unit = ()
+  def moveCursor(d: Direction): Unit = {
+    currentFrame = currentFrame.moveCursor(d, gridDims)
+  }
 
   // TODO implement me
-  def getCellType(p : Point): CellType = Empty()
+  def getCellType(p : Point): CellType = currentFrame.getCellType(p)
 
   // TODO implement me
   def setReverse(r: Boolean): Unit = ()
