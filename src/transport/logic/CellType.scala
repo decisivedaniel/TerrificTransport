@@ -11,4 +11,4 @@ case class SnakeBody(distanceToHead: Float = 0f) extends CellType
 
 case class Empty() extends CellType
 
-case class Apple() extends CellType
+case class Cursor() extends CellType
