@@ -60,7 +60,7 @@ class TransportGame extends GameBase {
       cell match {
         case Cursor() =>
           stroke(255,255,255,255)
-          setFillColor(Color(0,255,0,128))
+          setFillColor(Color(255,255,0,128))
           drawRectangle(area)
 //        case SnakeHead(direction) =>
 //          setFillColor(Color.LawnGreen)
@@ -72,7 +72,10 @@ class TransportGame extends GameBase {
 //        case Apple()  =>
 //          setFillColor(Color.Red)
 //          drawEllipse(area)
-        case Empty() => ()
+        case Empty() =>
+          setFillColor(Color.DarkGreen)
+          drawRectangle(area)
+
       }
     }
 
