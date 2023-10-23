@@ -77,7 +77,9 @@ class TransportGame extends GameBase {
         case Track() =>
           stroke(255, 255, 255, 255)
           setFillColor(Color(89, 59, 25, 255))
-          drawRectangle(area)
+          val thickness : Int = (widthPerCell * 0.1).toInt
+          rect(area.centerUp.x-thickness, area.centerUp.y, thickness * 2, area.height)
+          rect(area.centerLeft.x, area.centerLeft.y-thickness, width, thickness * 2)
         case Empty() =>
 
 
