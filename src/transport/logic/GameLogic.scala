@@ -11,6 +11,8 @@ import transport.logic.GameLogic._
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
   private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point]())
+  private var isPlacingTrack : Boolean = false
+
   def gameOver: Boolean = false
 
   // TODO implement me
@@ -19,11 +21,10 @@ class GameLogic(val random: RandomGenerator,
   // TODO implement me
   def moveCursor(d: Direction): Unit = {
     currentFrame = currentFrame.moveCursor(d, gridDims)
+    if (isPlacingTrack) currentFrame = currentFrame.toggleTrackOnCursor()
   }
 
-  def placeTrack() : Unit = {
-    currentFrame = currentFrame.toggleTrackOnCursor()
-  }
+  def placeTrack() : Unit = isPlacingTrack = !isPlacingTrack
 
   // TODO implement me
   def getCellType(p : Point): CellType = currentFrame.getCellType(p)
