@@ -57,6 +57,8 @@ class TransportGame extends GameBase {
     }
 
     def drawCell(area: Rectangle, cell: CellType): Unit = {
+      setFillColor(Color.DarkGreen)
+      drawRectangle(area)
       cell match {
         case Cursor() =>
           stroke(255,255,255,255)
@@ -77,8 +79,7 @@ class TransportGame extends GameBase {
           setFillColor(Color(89, 59, 25, 255))
           drawRectangle(area)
         case Empty() =>
-          setFillColor(Color.DarkGreen)
-          drawRectangle(area)
+
 
       }
     }
