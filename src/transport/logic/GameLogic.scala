@@ -22,7 +22,7 @@ class GameLogic(val random: RandomGenerator,
   }
 
   def placeTrack() : Unit = {
-    currentFrame = currentFrame.placeTrackOnCursor()
+    currentFrame = currentFrame.toggleTrackOnCursor()
   }
 
   // TODO implement me

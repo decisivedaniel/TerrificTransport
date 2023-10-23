@@ -11,7 +11,8 @@ case class TrainFrame(cursor : Point, paths : List[Point]) {
     else Empty()
   }
 
-  def placeTrackOnCursor() : TrainFrame = {
-    copy(paths = paths.appended(cursor))
+  def toggleTrackOnCursor() : TrainFrame = {
+    if (paths.contains(cursor)) copy(paths = paths.filter(p => p != cursor))
+    else copy(paths = paths.appended(cursor))
   }
 }
