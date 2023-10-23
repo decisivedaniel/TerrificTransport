@@ -10,7 +10,7 @@ import processing.event.KeyEvent
 import java.awt.event.KeyEvent._
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
-import transport.logic.{Cursor, CellType, Dimensions, Direction, East, Empty, GameLogic, North, South, West, Point => GridPoint}
+import transport.logic.{Cursor, CellType, Dimensions, Direction, East, Empty, GameLogic, North, South, Track, West, Point => GridPoint}
 import transport.game.TransportGame._
 import engine.graphics.Color._
 import engine.random.ScalaRandomGen
@@ -57,6 +57,8 @@ class TransportGame extends GameBase {
     }
 
     def drawCell(area: Rectangle, cell: CellType): Unit = {
+      setFillColor(Color.DarkGreen)
+      drawRectangle(area)
       cell match {
         case Cursor() =>
           stroke(255,255,255,255)
@@ -72,9 +74,14 @@ class TransportGame extends GameBase {
 //        case Apple()  =>
 //          setFillColor(Color.Red)
 //          drawEllipse(area)
+        case Track() =>
+          stroke(255, 255, 255, 255)
+          setFillColor(Color(89, 59, 25, 255))
+          val thickness : Int = (widthPerCell * 0.1).toInt
+          rect(area.centerUp.x-thickness, area.centerUp.y, thickness * 2, area.height)
+          rect(area.centerLeft.x, area.centerLeft.y-thickness, width, thickness * 2)
         case Empty() =>
-          setFillColor(Color.DarkGreen)
-          drawRectangle(area)
+
 
       }
     }
@@ -105,6 +112,7 @@ class TransportGame extends GameBase {
       case VK_LEFT  => moveCursor(West())
       case VK_RIGHT => moveCursor(East())
       case VK_R     => gameLogic.setReverse(true)
+      case VK_T     => gameLogic.placeTrack()
       case _        => ()
     }
 
