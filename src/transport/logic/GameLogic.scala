@@ -10,7 +10,9 @@ import transport.logic.GameLogic._
  */
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
-  private var currentFrame : TrainFrame = TrainFrame(Point(0,0))
+  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point]())
+  private var isPlacingTrack : Boolean = false
+
   def gameOver: Boolean = false
 
   // TODO implement me
@@ -19,7 +21,10 @@ class GameLogic(val random: RandomGenerator,
   // TODO implement me
   def moveCursor(d: Direction): Unit = {
     currentFrame = currentFrame.moveCursor(d, gridDims)
+    if (isPlacingTrack) currentFrame = currentFrame.toggleTrackOnCursor()
   }
+
+  def placeTrack() : Unit = isPlacingTrack = !isPlacingTrack
 
   // TODO implement me
   def getCellType(p : Point): CellType = currentFrame.getCellType(p)
@@ -34,7 +39,7 @@ object GameLogic {
 
   val FramesPerSecond: Int = 5 // change this to increase/decrease speed of game
 
-  val DrawSizeFactor = 1.0 // increase this to make the game bigger (for high-res screens)
+  val DrawSizeFactor = 1.5 // increase this to make the game bigger (for high-res screens)
   // or decrease to make game smaller
 
   // These are the dimensions used when playing the game.
