@@ -38,7 +38,7 @@ object GameLogic {
 
   val FramesPerSecond: Int = 5 // change this to increase/decrease speed of game
 
-  val DrawSizeFactor = 2.0 // increase this to make the game bigger (for high-res screens)
+  val DrawSizeFactor = 1.5 // increase this to make the game bigger (for high-res screens)
   // or decrease to make game smaller
 
   // These are the dimensions used when playing the game.
