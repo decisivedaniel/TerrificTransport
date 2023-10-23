@@ -1,5 +1,4 @@
 package transport.logic
-
 // you can alter this file!
 
 sealed abstract class CellType
@@ -12,3 +11,5 @@ case class SnakeBody(distanceToHead: Float = 0f) extends CellType
 case class Empty() extends CellType
 
 case class Cursor() extends CellType
+
+case class Track() extends CellType
