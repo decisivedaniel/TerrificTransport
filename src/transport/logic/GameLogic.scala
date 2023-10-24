@@ -58,7 +58,7 @@ object GameLogic {
     Dimensions(width = 25, height = 25)  // you can adjust these values to play on a different sized board
 
   def CreateCities(gridDims: Dimensions, randomInt: Int => Int) : List[KeyPoint] = {
-    var allPoints = gridDims.allPointsInside
+    var allPoints = gridDims.allPointsInside.filter(p => gridDims.awayFromBounds(p))
     var cities = List[KeyPoint]()
     val numOfTotalCities = randomInt(5) + 5
     while (numOfTotalCities - cities.length > 0) {
