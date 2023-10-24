@@ -59,11 +59,11 @@ object GameLogic {
 
   def CreateCities(gridDims: Dimensions, randomInt: Int => Int) : List[KeyPoint] = {
     var allPoints = gridDims.allPointsInside
-    val cities = List[KeyPoint]()
-    val numOfCities = randomInt(5) + 5
-    while (numOfCities > 0) {
+    var cities = List[KeyPoint]()
+    val numOfTotalCities = randomInt(5) + 5
+    while (numOfTotalCities - cities.length > 0) {
       val spot = allPoints(randomInt(allPoints.length))
-      cities :+ KeyPoint.buildCity(spot)
+      cities = cities.prepended(KeyPoint.buildCity(spot))
       allPoints = allPoints.filter(p => p != spot)
     }
     cities
