@@ -9,6 +9,10 @@ case class TrainFrame(cursor: Point, paths: List[Point], keyPoints: List[KeyPoin
 
   def getCellType(p: Point): CellType = {
     if (cursor == p) Cursor()
+    else if (keyPoints.exists(kp => kp.isLocatedHere(p))) {
+      val kp = keyPoints.find(kp => kp.isLocatedHere(p)).head
+      DisplayCity(kp.toString)
+    }
     else if (paths.contains(p)) Track()
     else Empty()
   }
