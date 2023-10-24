@@ -33,7 +33,7 @@ case class Forest(storage: Int, rate : Float) extends Farm {
 }
 
 case class City(name : String, location: Point, population : Int, storage : Map[String, Int]) extends KeyPoint(location, storage) with Consumer {
-  override def delivery(amount : Int): City = copy(storage = amount + storage)
-
+  override def delivery(amount : Int): City = this
+  override def toString(): String = s"$name: $population"
 
 }
