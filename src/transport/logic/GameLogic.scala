@@ -2,6 +2,7 @@ package transport.logic
 
 import engine.random.{RandomGenerator, ScalaRandomGen}
 import transport.logic.GameLogic._
+import transport.logic.resources.KeyPoint
 
 /** To implement Snake, complete the ``TODOs`` below.
  *
@@ -10,7 +11,7 @@ import transport.logic.GameLogic._
  */
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
-  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point]())
+  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point](), GameLogic.CreateCities(gridDims, random.randomInt))
   private var isPlacingTrack : Boolean = false
 
   def gameOver: Boolean = false
@@ -56,6 +57,17 @@ object GameLogic {
     : Dimensions =
     Dimensions(width = 25, height = 25)  // you can adjust these values to play on a different sized board
 
+  def CreateCities(gridDims: Dimensions, randomInt: Int => Int) : List[KeyPoint] = {
+    var allPoints = gridDims.allPointsInside
+    val cities = List[KeyPoint]()
+    val numOfCities = randomInt(5) + 5
+    while (numOfCities > 0) {
+      val spot = allPoints(randomInt(allPoints.length))
+      cities :+ KeyPoint.buildCity(spot)
+      allPoints = allPoints.filter(p => p != spot)
+    }
+    cities
+  }
 
 
 }

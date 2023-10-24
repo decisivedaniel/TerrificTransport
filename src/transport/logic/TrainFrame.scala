@@ -1,6 +1,8 @@
 package transport.logic
 
-case class TrainFrame(cursor : Point, paths : List[Point]) {
+import transport.logic.resources.KeyPoint
+
+case class TrainFrame(cursor: Point, paths: List[Point], keyPoints: List[KeyPoint]) {
   def moveCursor(d: Direction, gridDim: Dimensions): TrainFrame = {
     copy(gridDim.withinBounds(cursor + d.toPoint))
   }
