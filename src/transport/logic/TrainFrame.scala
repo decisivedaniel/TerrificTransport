@@ -14,6 +14,14 @@ case class TrainFrame(cursor: Point, paths: List[Point], routes: List[Queue[Poin
     copy(gridDim.withinBounds(cursor + d.toPoint))
   }
 
+  def tryMoveCursor(d: Direction, gridDim: Dimensions): TrainFrame = {
+    val nextPoint: Point = gridDim.withinBounds(cursor + d.toPoint)
+    if (paths.contains(nextPoint) || keyPoints.exists(p => p.isLocatedHere(nextPoint))) {
+      copy(nextPoint)
+    } else {
+      this
+    }
+  }
   def getCursor: Point = cursor
 
   def getCellType(p: Point): CellType = {

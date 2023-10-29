@@ -32,7 +32,15 @@ class GameLogic(val random: RandomGenerator,
 
   // TODO implement me
   def moveCursor(d: Direction): Unit = {
-    currentFrame = currentFrame.moveCursor(d, gridDims)
+    if (isPathMode){
+      val currentCursor = currentFrame.getCursor
+      currentFrame = currentFrame.tryMoveCursor(d, gridDims)
+      if (currentCursor != currentFrame.getCursor) {
+        currentRoute = currentRoute.prepended(currentFrame.getCursor)
+      }
+    } else {
+      currentFrame = currentFrame.moveCursor(d, gridDims)
+    }
   }
 
   def placeTrack() : Unit = if (isBuildMode) currentFrame = currentFrame.toggleTrackOnCursor()
