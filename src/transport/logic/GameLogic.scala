@@ -11,13 +11,15 @@ import transport.logic.resources.KeyPoint
  */
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
-  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point](), GameLogic.CreateCities(gridDims, random.randomInt))
+  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point](), GameLogic.CreateCities(gridDims, random.randomInt), 1000, 0)
   private var isPlacingTrack : Boolean = false
   private var isBuilding: Boolean = false
 
   def gameOver: Boolean = false
 
-  def isBuildMode: Boolean = isBuilding;
+  def isBuildMode: Boolean = isBuilding
+
+  def getGuiInfo: String = currentFrame.topGuiInfo()
 
   // TODO implement me
   def step(): Unit = ()
