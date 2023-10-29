@@ -4,6 +4,8 @@ import engine.random.{RandomGenerator, ScalaRandomGen}
 import transport.logic.GameLogic._
 import transport.logic.resources.KeyPoint
 
+import scala.collection.immutable.Queue
+
 /** To implement Snake, complete the ``TODOs`` below.
  *
  * If you need additional files,
@@ -11,13 +13,17 @@ import transport.logic.resources.KeyPoint
  */
 class GameLogic(val random: RandomGenerator,
                 val gridDims : Dimensions) {
-  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point](), GameLogic.CreateCities(gridDims, random.randomInt), 1000, 0)
+  private var currentFrame : TrainFrame = TrainFrame(Point(0,0), List[Point](), List[Queue[Point]](), GameLogic.CreateCities(gridDims, random.randomInt), 1000, 0)
   private var isPlacingTrack : Boolean = false
   private var isBuilding: Boolean = false
+  private var isPathing: Boolean = false
+  private var currentRoute: Queue[Point] = Queue[Point]()
 
   def gameOver: Boolean = false
 
   def isBuildMode: Boolean = isBuilding
+
+  def isPathMode: Boolean = isPathing
 
   def getGuiInfo: String = currentFrame.topGuiInfo()
 
@@ -26,15 +32,44 @@ class GameLogic(val random: RandomGenerator,
 
   // TODO implement me
   def moveCursor(d: Direction): Unit = {
-    currentFrame = currentFrame.moveCursor(d, gridDims)
+    if (isPathMode){
+      val currentCursor = currentFrame.getCursor
+      currentFrame = currentFrame.tryMoveCursor(d, gridDims)
+      if (currentCursor != currentFrame.getCursor) {
+        currentRoute = currentRoute.prepended(currentFrame.getCursor)
+      }
+    } else {
+      currentFrame = currentFrame.moveCursor(d, gridDims)
+    }
   }
 
   def placeTrack() : Unit = if (isBuildMode) currentFrame = currentFrame.toggleTrackOnCursor()
 
-  def buildModeToggle(): Unit = isBuilding = !isBuilding
+  def buildModeToggle(): Unit = isBuilding = !isPathing && !isBuilding
+  def pathModeToggle(): Unit = {
+    // Handle Cancelling Path
+    if(isPathing){
+      currentRoute = Queue[Point]()
+    }
+    isPathing = !isBuilding && !isPathing
+  }
+
+  def completePath(): Unit = {
+    if (currentRoute.nonEmpty && currentRoute.front == currentFrame.getCursor) {
+      currentFrame = currentFrame.copy(routes = currentFrame.routes.prepended(currentRoute))
+      currentRoute = Queue[Point]()
+      pathModeToggle()
+    }
+  }
 
   // TODO implement me
-  def getCellType(p : Point): CellType = currentFrame.getCellType(p)
+  def getCellType(p : Point): CellType = {
+    if(currentRoute.contains(p)) {
+      Route()
+    } else {
+      currentFrame.getCellType(p)
+    }
+  }
 
   // TODO implement me
   def setReverse(r: Boolean): Unit = ()

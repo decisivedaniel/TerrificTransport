@@ -10,7 +10,7 @@ import processing.event.KeyEvent
 import java.awt.event.KeyEvent._
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
-import transport.logic.{CellType, Cursor, Dimensions, Direction, DisplayCity, East, Empty, GameLogic, North, South, Track, West, Point => GridPoint}
+import transport.logic.{CellType, Cursor, Dimensions, Direction, DisplayCity, East, Empty, GameLogic, North, Route, South, Track, West, Point => GridPoint}
 import transport.game.TransportGame._
 import engine.graphics.Color._
 import engine.random.ScalaRandomGen
@@ -25,8 +25,9 @@ class TransportGame extends GameBase {
   val screenArea: Rectangle = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
 
   //String Constants
-  private val normalRunInstructions: String = "B: Build Mode"
+  private val normalRunInstructions: String = "B: Build Mode, P: Path Mode"
   private val buildModeInstructions: String = "T: Lay Track, B: Exit Build Mode"
+  private val pathModeInstructions: String = "C: Complete, P: Exit Path Mode/Cancel"
 
   // this function is wrongly named draw by processing (is called on each update next to drawing)
   override def draw(): Unit = {
@@ -65,6 +66,14 @@ class TransportGame extends GameBase {
       rect(screenArea.leftDown.x, screenArea.leftDown.y - heightPerCell, screenArea.width, heightPerCell)
     }
 
+    def buildTrack(area: Rectangle): Unit = {
+      stroke(255, 255, 255, 255)
+      setFillColor(Color(89, 59, 25, 255))
+      val thickness: Int = (widthPerCell * 0.1).toInt
+      rect(area.centerUp.x - thickness, area.centerUp.y, thickness * 2, area.height)
+      rect(area.centerLeft.x, area.centerLeft.y - thickness, width, thickness * 2)
+    }
+
     def drawGUI() : Unit = {
       // Add Score, Money
       drawTextAbove(gameLogic.getGuiInfo, screenArea.centerUp.copy(y = screenArea.centerUp.y + heightPerCell))
@@ -73,6 +82,9 @@ class TransportGame extends GameBase {
         drawTextAbove(buildModeInstructions, screenArea.centerDown)
         // Create Green border
         buildBorder(Color.Green)
+      } else if (gameLogic.isPathMode) {
+        drawTextAbove(pathModeInstructions, screenArea.centerDown)
+        buildBorder(Color.Purple.copy(alpha = 100))
       } else {
         // Show B to enter build mode
         drawTextAbove(normalRunInstructions, screenArea.centerDown)
@@ -104,11 +116,13 @@ class TransportGame extends GameBase {
 //          setFillColor(Color.Red)
 //          drawEllipse(area)
         case Track() =>
-          stroke(255, 255, 255, 255)
-          setFillColor(Color(89, 59, 25, 255))
-          val thickness : Int = (widthPerCell * 0.1).toInt
-          rect(area.centerUp.x-thickness, area.centerUp.y, thickness * 2, area.height)
-          rect(area.centerLeft.x, area.centerLeft.y-thickness, width, thickness * 2)
+          buildTrack(area)
+        case Route() =>
+          buildTrack(area)
+          if (gameLogic.isPathMode) {
+            setFillColor(Color.Gray.copy(alpha = 100))
+            drawEllipse(area)
+          }
         case Empty() =>
 
 
@@ -145,6 +159,8 @@ class TransportGame extends GameBase {
       case VK_R     => gameLogic.setReverse(true)
       case VK_T     => gameLogic.placeTrack()
       case VK_B     => gameLogic.buildModeToggle()
+      case VK_P     => gameLogic.pathModeToggle()
+      case VK_C     => gameLogic.completePath()
       case _        => ()
     }
 
