@@ -84,7 +84,7 @@ class TransportGame extends GameBase {
         buildBorder(Color.Green)
       } else if (gameLogic.isPathMode) {
         drawTextAbove(pathModeInstructions, screenArea.centerDown)
-        buildBorder(Color.Purple)
+        buildBorder(Color.Purple.copy(alpha = 100))
       } else {
         // Show B to enter build mode
         drawTextAbove(normalRunInstructions, screenArea.centerDown)
@@ -119,8 +119,10 @@ class TransportGame extends GameBase {
           buildTrack(area)
         case Route() =>
           buildTrack(area)
-          setFillColor(Color.Gray)
-          drawEllipse(area)
+          if (gameLogic.isPathMode) {
+            setFillColor(Color.Gray.copy(alpha = 100))
+            drawEllipse(area)
+          }
         case Empty() =>
 
 
