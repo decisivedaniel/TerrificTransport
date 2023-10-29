@@ -24,11 +24,21 @@ class TransportGame extends GameBase {
   val heightInPixels: Int = (GameLogic.DrawSizeFactor *  HeightCellInPixels * gridDimensions.height).ceil.toInt
   val screenArea: Rectangle = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
 
+  //String Constants
+  private val normalRunInstructions: String = "B: Build Mode"
+  private val buildModeInstructions: String = "T: Lay Track, B: Exit Build Mode"
+
   // this function is wrongly named draw by processing (is called on each update next to drawing)
   override def draw(): Unit = {
     updateState()
     drawGrid()
     if (gameLogic.gameOver) drawGameOverScreen()
+  }
+
+  def drawTextAbove(text: String, point: Point): Unit = {
+    stroke(255, 255, 255, 255)
+    setFillColor(Color.White)
+    drawText(text, Point(point.x - (text.length * 1.3f), point.y - 5f))
   }
 
   def drawGameOverScreen(): Unit = {
@@ -47,16 +57,33 @@ class TransportGame extends GameBase {
       Rectangle(leftUp, widthPerCell, heightPerCell)
     }
 
-    def getTriangleForDirection(dir: Direction, area: Rectangle) = {
-      dir match {
-        case West()   => area.trianglePointingLeft
-        case North()  => area.trianglePointingUp
-        case East()   => area.trianglePointingRight
-        case South()  => area.trianglePointingDown
+    def buildBorder(color: Color): Unit = {
+      setFillColor(color.copy(alpha = 100))
+      rect(screenArea.leftUp.x, screenArea.leftUp.y, widthPerCell, screenArea.height)
+      rect(screenArea.leftUp.x, screenArea.leftUp.y, screenArea.width, heightPerCell)
+      rect(screenArea.rightUp.x - widthPerCell, screenArea.rightUp.y, widthPerCell, screenArea.height)
+      rect(screenArea.leftDown.x, screenArea.leftDown.y - heightPerCell, screenArea.width, heightPerCell)
+    }
+
+    def drawGUI() : Unit = {
+      // Text Defaults
+
+
+      // Add Score, Money
+
+      if (gameLogic.isBuildMode) {
+        // Show T, B exit
+        drawTextAbove(buildModeInstructions, screenArea.centerDown)
+        // Create Green border
+        buildBorder(Color.Green)
+      } else {
+        // Show B to enter build mode
+        drawTextAbove(normalRunInstructions, screenArea.centerDown);
       }
     }
 
     def drawCell(area: Rectangle, cell: CellType): Unit = {
+      // Background
       setFillColor(Color.DarkGreen)
       drawRectangle(area)
       cell match {
@@ -68,7 +95,7 @@ class TransportGame extends GameBase {
           setFillColor(Color.Blue)
           drawRectangle(area)
           setFillColor(Color.White)
-          drawText(title, Point(area.leftUp.x - (title.length * 1.3f), area.leftUp.y - 5))
+          drawTextAbove(title, area.leftUp)
 //        case SnakeHead(direction) =>
 //          setFillColor(Color.LawnGreen)
 //          drawTriangle(getTriangleForDirection(direction, area))
@@ -98,6 +125,8 @@ class TransportGame extends GameBase {
       drawCell(getCell(p), gameLogic.getCellType(p))
     }
 
+    drawGUI()
+
   }
 
   /** Method that calls handlers for different key press events.
@@ -118,6 +147,7 @@ class TransportGame extends GameBase {
       case VK_RIGHT => moveCursor(East())
       case VK_R     => gameLogic.setReverse(true)
       case VK_T     => gameLogic.placeTrack()
+      case VK_B     => gameLogic.buildModeToggle()
       case _        => ()
     }
 
