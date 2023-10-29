@@ -47,7 +47,7 @@ class GameLogic(val random: RandomGenerator,
   }
 
   def completePath(): Unit = {
-    if (!currentRoute.isEmpty && currentRoute.front == currentFrame.getCursor()) {
+    if (currentRoute.nonEmpty && currentRoute.front == currentFrame.getCursor()) {
       currentFrame = currentFrame.copy(routes = currentFrame.routes.prepended(currentRoute))
       currentRoute = Queue[Point]()
       pathModeToggle()

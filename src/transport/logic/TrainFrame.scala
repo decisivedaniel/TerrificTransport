@@ -14,7 +14,7 @@ case class TrainFrame(cursor: Point, paths: List[Point], routes: List[Queue[Poin
     copy(gridDim.withinBounds(cursor + d.toPoint))
   }
 
-  def getCursor(): Point = cursor
+  def getCursor: Point = cursor
 
   def getCellType(p: Point): CellType = {
     if (cursor == p) Cursor()
