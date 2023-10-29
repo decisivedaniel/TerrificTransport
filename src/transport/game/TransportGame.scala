@@ -66,11 +66,8 @@ class TransportGame extends GameBase {
     }
 
     def drawGUI() : Unit = {
-      // Text Defaults
-
-
       // Add Score, Money
-
+      drawTextAbove(gameLogic.getGuiInfo, screenArea.centerUp.copy(y = screenArea.centerUp.y + heightPerCell))
       if (gameLogic.isBuildMode) {
         // Show T, B exit
         drawTextAbove(buildModeInstructions, screenArea.centerDown)
@@ -78,7 +75,7 @@ class TransportGame extends GameBase {
         buildBorder(Color.Green)
       } else {
         // Show B to enter build mode
-        drawTextAbove(normalRunInstructions, screenArea.centerDown);
+        drawTextAbove(normalRunInstructions, screenArea.centerDown)
       }
     }
 
