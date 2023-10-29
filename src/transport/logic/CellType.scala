@@ -13,3 +13,5 @@ case class Empty() extends CellType
 case class Cursor() extends CellType
 
 case class Track() extends CellType
+
+case class DisplayCity(title: String) extends CellType

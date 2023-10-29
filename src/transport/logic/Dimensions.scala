@@ -15,4 +15,7 @@ case class Dimensions(width : Int, height : Int) {
     else if (p.y >= height) p.copy(y = height - 1)
     else p
   }
+
+  def awayFromBounds(p: Point): Boolean = p.x > 1 && p.x < width - 2 && p.y > 1 && p.y < height - 2
+
 }

@@ -10,7 +10,7 @@ import processing.event.KeyEvent
 import java.awt.event.KeyEvent._
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
-import transport.logic.{Cursor, CellType, Dimensions, Direction, East, Empty, GameLogic, North, South, Track, West, Point => GridPoint}
+import transport.logic.{CellType, Cursor, Dimensions, Direction, DisplayCity, East, Empty, GameLogic, North, South, Track, West, Point => GridPoint}
 import transport.game.TransportGame._
 import engine.graphics.Color._
 import engine.random.ScalaRandomGen
@@ -64,6 +64,11 @@ class TransportGame extends GameBase {
           stroke(255,255,255,255)
           setFillColor(Color(255,255,0,128))
           drawRectangle(area)
+        case DisplayCity(title) =>
+          setFillColor(Color.Blue)
+          drawRectangle(area)
+          setFillColor(Color.White)
+          drawText(title, Point(area.leftUp.x - (title.length * 1.3f), area.leftUp.y - 5))
 //        case SnakeHead(direction) =>
 //          setFillColor(Color.LawnGreen)
 //          drawTriangle(getTriangleForDirection(direction, area))
