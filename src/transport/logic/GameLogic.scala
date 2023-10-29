@@ -45,13 +45,13 @@ class GameLogic(val random: RandomGenerator,
 
   def placeTrack() : Unit = if (isBuildMode) currentFrame = currentFrame.toggleTrackOnCursor()
 
-  def buildModeToggle(): Unit = isBuilding = !isBuilding
+  def buildModeToggle(): Unit = isBuilding = !isPathing && !isBuilding
   def pathModeToggle(): Unit = {
     // Handle Cancelling Path
     if(isPathing){
       currentRoute = Queue[Point]()
     }
-    isPathing = !isPathing
+    isPathing = !isBuilding && !isPathing
   }
 
   def completePath(): Unit = {
